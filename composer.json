@@ -11,7 +11,8 @@
         "php": "^7.1.3",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "laravelcollective/html": "^5.2.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -32,13 +33,17 @@
         }
     },
     "autoload": {
+        "classmap": [
+            "database",
+            "database/seeds"
+        ],
         "psr-4": {
             "App\\": "app/"
         },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ]
+        "files": [
+            "app/Helpers/helpers.php"
+         ],
+        "exclude-from-classmap" : ["/database/migrations/"]
     },
     "autoload-dev": {
         "psr-4": {

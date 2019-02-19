@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -66,6 +66,31 @@
                                     </form>
                                 </div>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('profile') }}">
+                                    {{ __('My Profile') }}
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user-logout') }}">
+                                    {{ __('Logout') }}
+                                </a>
+                            </li>
+
+                            @if(isAdmin())
+                                <li class="nav-item">
+                                     <a class="nav-link" href="{{ route('admin.users') }}">
+                                         {{ __('Users') }}
+                                     </a>
+                                </li>
+
+                                <li class="nav-item">
+                                     <a class="nav-link" href="{{ route('admin.groups.index') }}">
+                                         {{ __('Groups') }}
+                                     </a>
+                                </li>
+                            @endif
                         @endguest
                     </ul>
                 </div>
@@ -76,5 +101,8 @@
             @yield('content')
         </main>
     </div>
+
+    {{-- After Footer Scripts --}}
+    @yield('footer-scripts')
 </body>
 </html>

@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->integer('temp_otp')->nullable();
             $table->string('reset_token')->nullable();
             $table->rememberToken();
-            $table->timestamp('last_loign_at')->nullable();
+            $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

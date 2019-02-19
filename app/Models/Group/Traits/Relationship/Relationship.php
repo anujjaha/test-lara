@@ -6,7 +6,7 @@
  * @author Anuj Jaha <er.anujjaha@gmail.com>
  */
 
-use App\Models\Role\Role;
+use App\Models\GroupRole\GroupRole;
 
 trait Relationship
 {
@@ -17,6 +17,6 @@ trait Relationship
 	 */
 	public function group_roles()
 	{
-	    return $this->belongsTo(Role::class);
+	    return $this->hasMany(GroupRole::class, 'group_id');
 	}
 }

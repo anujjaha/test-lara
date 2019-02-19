@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\UserGroup\UserGroup;
-use App\Models\User\User;
 
 class HomeController extends Controller
 {
@@ -25,12 +23,32 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = UserGroup::where('user_id', 1)->with(['group', 'group.group_roles'])->get();
-        dd($data);
-        //group_roles
-        $user = User::where('id', Auth()->user()->id)->with(['user_groups', 'user_groups.group'])->first();
-        dd($user);
-        dd($user->user_groups->pluck('group_id')->toArray());
         return view('home');
+    }
+
+    /**
+     * My Profile
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function profile()
+    {
+        $user = Auth()->user();
+        return view('profile')->with(compact('user'));
+    }
+
+    /**
+     * Delete Account
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function deleteAccount()
+    {
+        $user = Auth()->user();
+        
+        $user->delete();
+        Auth()->logout();
+
+        return redirect('/');
     }
 }

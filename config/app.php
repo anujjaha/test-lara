@@ -15,6 +15,13 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+
+    /**
+     * Default User Role Id
+     * 
+     */
+    'defaultRoleId' => env('DEFAULT_ROLE_ID', 2),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -175,6 +182,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Collective\Html\HtmlServiceProvider::class,
     ],
 
     /*
@@ -224,6 +232,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];
