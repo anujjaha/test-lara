@@ -26,7 +26,9 @@
                                     <td>
                                         @if(isset($group->group_roles) && count($group->group_roles))
                                             @foreach($group->group_roles as $groupRole)
-                                                <span class="label">{{ ucfirst($groupRole->role->name) }}</span>
+                                                <a href="{{ route('admin.roles.show', ['id' => $groupRole->role_id ]) }}">
+                                                    {{ ucfirst($groupRole->role->name) }}
+                                                </a>
                                             @endforeach
                                         @endif
                                     </td>

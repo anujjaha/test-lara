@@ -65,6 +65,92 @@ class EloquentGroupRepository extends DbRepository
     }
 
     /**
+     * Update
+     * 
+     * @param int $id
+     * @param array $input
+     * @return bool
+     */
+    public function update($id, $input)
+    {
+        $model      = $this->model->find($id);
+        $roleIds    = isset($input['role_id']) ? $input['role_id'] : false;
+        $input      = $this->prepareInput($input);
+
+        $status = $model->update($input);
+
+        if($status && $roleIds)
+        {
+            $this->updateGroupRole($model, $roleIds);
+        }
+
+        return $model;
+    }
+
+    /**
+     * Update Group Role
+     * 
+     * @param object $group
+     * @param array $roleIds
+     * @return bool
+     */
+    public function updateGroupRole($group = null, $roleIds = array())
+    {
+        $groupRoles        = $group->group_roles;
+        $groupRoleData     = [];
+        $processedRoleIds  = [];
+
+        if($group && isset($roleIds))   
+        {
+            foreach($roleIds as $roleId)
+            {
+                $isExists               = $groupRoles->where('role_id', $roleId);
+                $processedRoleIds[]     = $roleId;
+
+                if(isset($isExists) && count($isExists))
+                {
+                    continue;
+                }
+                else
+                {
+                    $groupRoleData[] = [
+                        'group_id'  => $group->id,
+                        'role_id'   => $roleId
+                    ];
+                }
+            }
+
+            // Delete UnApplied Groups
+            GroupRole::where('group_id', $group->id)
+            ->whereNotIn('role_id', $processedRoleIds)
+            ->delete();
+
+            if(isset($groupRoleData) && count($groupRoleData))
+            {
+                GroupRole::insert($groupRoleData);
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Prepare Input
+     * 
+     * @param array $input
+     * @return array
+     */
+    public function prepareInput($input = array())
+    {
+        if(isset($input) && count($input))
+        {
+            return [
+                'name' => isset($input['name']) ? $input['name'] : 'Default'
+            ];
+        }
+    }
+
+    /**
      * Attach Roles
      * 
      * @param object $model

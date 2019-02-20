@@ -64,6 +64,43 @@ class AdminGroupController extends Controller
     }
 
     /**
+     * Edit Group
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function edit($id, Request $request)
+    {
+        $group    = $this->repository->getById($id);
+        $roles    = $this->repository->getAllRoles();
+            
+        if($group)
+        {
+            return view('admin.group.edit')->with(compact('group', 'roles'));
+        }
+
+        return redirect()->route('admin.groups.index')->withFlashDanger(__('No Group Found!'));
+    }
+
+    /**
+     * Update Group
+     * 
+     * @param int $id
+     * @param Request $request
+     * @return mixed
+     */
+    public function update($id, Request $request)
+    {
+        $status = $this->repository->update($id, $request->all());
+
+        if($status)
+        {
+            return redirect()->route('admin.groups.index')->withFlashSuccess(__('Group Updated Successfully'));
+        }
+        
+        return redirect()->route('admin.groups.index')->withFlashDanger(__('Unable to Update Group!'));
+    }
+
+    /**
      * Store Group
      * 
      * @param Request $request

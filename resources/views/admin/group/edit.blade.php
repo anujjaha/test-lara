@@ -6,10 +6,10 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Create Group</div>
+                <div class="card-header">Edit Group</div>
                 
                 <div class="card-body">
-                    {!! Form::open(['route' => ['admin.groups.store'], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'admin-create-group', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data']) !!}
+                    {!! Form::model($group, ['route' => ['admin.groups.update', $group->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH', 'id' => 'admin-edit-group', 'files' => true]) !!}
                     
                     <div class="form-group">
                         {!! Form::label('name','Name : *', array('class' => 'control-label col-xs-12 col-sm-12 col-md-4 col-lg-3')) !!}
@@ -28,7 +28,7 @@
 
                     <div class="form-group">
                         <div class="controls col-xs-12">
-                            {!! Form::submit('Create', ['class' => 'btn btn-primary']) !!}
+                            {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
                     
