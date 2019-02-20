@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Client\Dashboard\ViewRequest;
 
 class HomeController extends Controller
 {
@@ -31,7 +32,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function profile()
+    public function profile(ViewRequest $request)
     {
         $user = Auth()->user();
         return view('profile')->with(compact('user'));
@@ -42,13 +43,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function deleteAccount()
+    public function deleteAccount(ViewRequest $request)
     {
         $user = Auth()->user();
-        
+         
         $user->delete();
-        Auth()->logout();
 
+        Auth()->logout();
+        
         return redirect('/');
     }
 }

@@ -49,6 +49,7 @@ class LoginController extends Controller
     {
         $user->update([
             'last_login_at' => Carbon::now()->toDateTimeString(),
+            'temp_otp'      => null,
             'is_login'      => 1
         ]);
     }

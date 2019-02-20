@@ -126,7 +126,7 @@ class EloquentGroupRepository extends DbRepository
      * @param int $id
      * @return array
      */
-    public function getById($id)
+    public function getById($id = null)
     {
         return Group::with(['group_roles', 'group_roles.role'])->where('id', $id)->first();
     }

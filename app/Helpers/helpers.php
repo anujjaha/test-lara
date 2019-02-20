@@ -16,10 +16,9 @@ use App\Models\Permission\Permission;
 if(!function_exists('userPermissions'))
 {
     /**
-     * Get Dashboard Redirect Based on Permission
-     *
-     * @param string $default
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * User Permissions
+     * 
+     * @return array
      */
     function userPermissions()
     {
@@ -58,22 +57,25 @@ if(!function_exists('userPermissions'))
 if(!function_exists('isAdmin'))
 {
     /**
-     * Get Dashboard Redirect Based on Permission
-     *
-     * @param string $default
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * Is Admin
+     * 
+     * @return boolean
      */
     function isAdmin()
     {
-        $currentUser    = Auth()->user();   
-        $userGroups     = UserGroup::where('user_id', $currentUser->id)->with(['group'])->get();    
-        $isAdminGroup   = $userGroups->where('group.name', 'admin')->first();
+        $currentUser = Auth()->user();   
 
-        if(isset($isAdminGroup))
+        if(isset($currentUser))
         {
-            return true;
-        }
+            $userGroups     = UserGroup::where('user_id', $currentUser->id)->with(['group'])->get();    
+            $isAdminGroup   = $userGroups->where('group.name', 'admin')->first();
 
+            if(isset($isAdminGroup))
+            {
+                return true;
+            }
+
+        }
         return false;
     }
 }
@@ -88,5 +90,26 @@ if(!function_exists('generateOTP'))
     function generateOTP()
     {
        return rand(11111, 99999);
+    }
+}
+
+if(!function_exists('logoutUser'))
+{
+    /**
+     * Logout User
+     * 
+     * @return bool
+     */
+    function logoutUser()
+    {
+        $currentUser = Auth()->user();
+
+        if(isset($currentUser))
+        {
+            $currentUser->is_login = 0;
+            return $currentUser->save();
+        }
+
+        return false;
     }
 }

@@ -15,7 +15,7 @@ trait Relationship
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-public function role_permissions()
+	public function role_permissions()
     {
     	return $this->hasMany(RolePermission::class, 'role_id');
     }

@@ -5,23 +5,21 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Group List</div>
+                <div class="card-header">Role List</div>
                 <div class="card-body">
-                    <h4>Name :  {{ $group->name }}</h4>
+                    <h4>Name :  {{ $role->name }}</h4>
                     <div class="col-md-12">
-                        Attached Roles:
-                        @if(isset($group->group_roles))
-                            @foreach($group->group_roles as $groupRrole)
+                        Attached Permissions:
+                        @if(isset($role->role_permissions))
+                            @foreach($role->role_permissions as $rolePermission)
                                 <p>
-                                    <a href="{{ route('admin.roles.show', ['id' => $groupRrole->role->id]) }}">
-                                        {{ ucfirst($groupRrole->role->name) }}
-                                    </a>
+                                    {{ ucfirst($rolePermission->permission->name) }}
                                 </p>
                             @endforeach
                         @endif
                     </div>
                     <div class="col-md-12">
-                        <a href="{!! route('admin.groups.create') !!}" class="pull-right btn btn-success">
+                        <a href="{!! route('admin.roles.create') !!}" class="pull-right btn btn-success">
                             Add
                         </a>
                     </div>

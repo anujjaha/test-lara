@@ -79,6 +79,8 @@ class DashboardController extends Controller
      */
     public function logout()
     {
+        logoutUser();
+        
         auth()->logout();
         
         return redirect('/');
